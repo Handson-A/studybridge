@@ -1,0 +1,61 @@
+.coursesPage {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.coursesPage h2 {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
+.courseInput {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.courseInput input {
+  flex: 1;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+}
+
+.courseInput button {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  background: #38bdf8;
+  color: #020617;
+}
+
+.courseList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.courseItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: #020617;
+  border-radius: 10px;
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  color: #f87171;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.emptyText {
+  opacity: 0.7;
+  text-align: center;
+}

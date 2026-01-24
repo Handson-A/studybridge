@@ -109,22 +109,29 @@
 .tabButtons {
   display: flex;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .tabButtons button {
   flex: 1;
-  padding: 0.4rem;
+  padding: 0.4rem 0.5rem;
   border: none;
-  border-radius: 6px;
-  background: #3b82f6;
-  color: #fff;
+  border-radius: 8px;
+  background: #374151; /* dark gray */
+  color: #9ca3af; /* gray text */
+  font-weight: 500;
+}
+
+.tabButtons button.active {
+  background: #3b82f6; /* blue */
+  color: white;
 }
 
 .tabContent {
-  background: #020617;
+  background: #1f2937; /* dark card background */
   padding: 0.75rem;
   border-radius: 10px;
-  max-height: 200px;
+  margin-bottom: 0.5rem;
+  max-height: 180px;
   overflow-y: auto;
 }

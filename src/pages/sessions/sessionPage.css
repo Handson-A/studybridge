@@ -1,137 +1,963 @@
-.sessionsPage {
-  max-width: 480px;
-  margin: 0 auto;
+.sessionPage {
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  background: #0f172a;
+}
+
+.pageHeader {
+  max-width: 700px;
+  margin: 0 auto 2rem;
 }
 
 .backBtn {
   background: none;
   border: none;
-  color: #38bdf8;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-
-.sessionsPage h2 {
-  margin-bottom: 1rem;
-  font-size: 1.4rem;
-}
-
-.sessionInput {
+  color: #60a5fa;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
   display: flex;
+  align-items: center;
   gap: 0.5rem;
-  margin-bottom: 1rem;
+  font-weight: 500;
 }
 
-.sessionInput input {
-  flex: 1;
-  padding: 0.6rem;
-  border-radius: 8px;
-  border: none;
+.backBtn:hover {
+  background: rgba(96, 165, 250, 0.1);
+  color: #93c5fd;
 }
 
-.sessionInput button {
-  padding: 0.6rem 1rem;
-  border-radius: 8px;
-  border: none;
-  font-weight: 600;
-  background: #22c55e;
-  color: #020617;
-}
-
-.sessionList {
-  list-style: none;
+.sessionMain {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   padding: 0;
 }
 
-.sessionItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem;
-  margin-bottom: 0.5rem;
-  background: #020617;
-  border-radius: 10px;
+.formWrapper {
+  width: 100%;
+  max-width: 700px;
 }
 
-.emptyText {
-  opacity: 0.7;
+/* Page Title & Header */
+.pageTitle {
+  margin-bottom: 2rem;
+}
+
+.pageTitle h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 0.75rem 0;
+  letter-spacing: -0.5px;
+}
+
+.pageTitle > p {
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 600px;
+}
+
+.offlineBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #fecaca;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.offlineDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #f87171;
+  box-shadow: 0 0 6px rgba(248, 113, 113, 0.6);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Success Banner */
+.successBanner {
+  display: flex;
+  gap: 1rem;
+  background: rgba(34, 197, 94, 0.15);
+  border-left: 3px solid #22c55e;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.bannerContent {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.checkIcon {
+  color: #22c55e;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.bannerContent p {
+  color: #86efac;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.bannerAction {
+  padding: 0.5rem 1rem;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.bannerAction:hover {
+  background: #16a34a;
+}
+
+/* Form Styling */
+.noteForm {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.formGroup label {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #e2e8f0;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.required {
+  color: #ef4444;
+}
+
+.fieldHint {
+  color: #94a3b8;
+  font-size: 0.8rem;
+  margin: 0.25rem 0 0 0;
+  font-weight: 400;
+}
+
+.formSelect,
+.formInput,
+.formTextarea {
+  background: #0f172a;
+  border: 1px solid #334155;
+  color: #e2e8f0;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.formSelect::placeholder,
+.formInput::placeholder,
+.formTextarea::placeholder {
+  color: #64748b;
+}
+
+.formSelect:focus,
+.formInput:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 220px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.buttonIcon {
+  font-size: 1.1rem;
+}
+
+.submitBtn:hover:not(:disabled) {
+  box-shadow: 0 10px 25px rgba(96, 165, 250, 0.3);
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #93c5fd, #60a5fa);
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.submitBtn.loading {
+  opacity: 0.8;
+}
+
+/* Pro Tip Section */
+.proTipSection {
+  display: flex;
+  gap: 1rem;
+  background: rgba(251, 191, 36, 0.1);
+  border-left: 3px solid #fbbf24;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+}
+
+.proTipIcon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.proTipContent {
+  flex: 1;
+}
+
+.proTipContent h3 {
+  color: #fbbf24;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+.proTipContent p {
+  color: #cbd5e1;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* ==================== LIGHT MODE ==================== */
+@media (prefers-color-scheme: light) {
+  .sessionPage {
+    background: #f8fafc;
+  }
+
+  .pageTitle h1 {
+    color: #1e293b;
+  }
+
+  .pageTitle > p {
+    color: #475569;
+  }
+
+  .noteForm {
+    background: #ffffff;
+    border-color: #e2e8f0;
+  }
+
+  .formSelect,
+  .formInput,
+  .formTextarea {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #1e293b;
+  }
+
+  .formSelect::placeholder,
+  .formInput::placeholder,
+  .formTextarea::placeholder {
+    color: #94a3b8;
+  }
+
+  .formGroup label {
+    color: #1e293b;
+  }
+
+  .fieldHint {
+    color: #64748b;
+  }
+
+  .offlineBadge {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #dc2626;
+  }
+
+  .proTipSection {
+    background: rgba(251, 191, 36, 0.05);
+    border-left-color: #f59e0b;
+  }
+
+  .proTipContent h3 {
+    color: #d97706;
+  }
+
+  .proTipContent p {
+    color: #5b21b6;
+  }
+
+  .successBanner {
+    background: rgba(34, 197, 94, 0.1);
+    border-left-color: #16a34a;
+  }
+
+  .checkIcon {
+    color: #16a34a;
+  }
+
+  .bannerContent p {
+    color: #15803d;
+  }
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .sessionPage {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .pageTitle h1 {
+    font-size: 1.5rem;
+  }
+
+  .pageTitle > p {
+    font-size: 0.9rem;
+  }
+
+  .noteForm {
+    padding: 1.5rem;
+  }
+
+  .formTextarea {
+    min-height: 180px;
+  }
+}
+
+@media (max-width: 640px) {
+  .sessionPage {
+    padding: 1rem 0.5rem;
+  }
+
+  .formWrapper {
+    max-width: 100%;
+  }
+
+  .pageTitle h1 {
+    font-size: 1.4rem;
+  }
+
+  .pageTitle > p {
+    font-size: 0.85rem;
+  }
+
+  .noteForm {
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+  }
+
+  .formGroup {
+    margin-bottom: 1.25rem;
+  }
+
+  .submitBtn {
+    padding: 0.875rem;
+    font-size: 0.9rem;
+  }
+
+  .proTipSection {
+    padding: 1rem;
+  }
+
+  .proTipIcon {
+    font-size: 1.25rem;
+  }
+
+  .proTipContent h3 {
+    font-size: 0.95rem;
+  }
+
+  .proTipContent p {
+    font-size: 0.85rem;
+  }
+}
+
+.sessionStats {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+
+.statItem svg {
+  color: #60a5fa;
+}
+
+/* ==================== SESSION FORM ==================== */
+.sessionFormContainer {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.formCard {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 1.25rem;
+  padding: 2rem;
+  width: 100%;
+  max-width: 700px;
+  animation: slideUp 0.3s ease;
+}
+
+.formHeader {
+  margin-bottom: 2rem;
   text-align: center;
 }
 
-.sessionActions {
-  display: flex;
-  gap: 0.5rem;
+.formHeader h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 1rem 0;
 }
 
-.notesEditor {
-  margin-top: 0.5rem;
+.formHeader p {
+  color: #cbd5e1;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Success Banner */
+.successBanner {
+  display: flex;
+  gap: 1rem;
+  background: rgba(34, 197, 94, 0.15);
+  border-left: 3px solid #22c55e;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.successBanner svg {
+  color: #22c55e;
+  flex-shrink: 0;
+}
+
+.successBanner p {
+  color: #86efac;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.sessionForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGroup {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.notesEditor textarea {
-  width: 100%;
-  min-height: 80px;
-  padding: 0.5rem;
-  border-radius: 8px;
-  border: none;
-  resize: vertical;
-}
-
-.notesEditor button {
-  align-self: flex-end;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: none;
-  background: #facc15;
-  color: #020617;
+.formGroup label {
+  color: #e2e8f0;
   font-weight: 600;
+  font-size: 0.95rem;
 }
 
-.aiControls {
+.required {
+  color: #ef4444;
+}
+
+.formInput,
+.formTextarea {
+  background: #0f172a;
+  border: 1px solid #334155;
+  color: #e2e8f0;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.formInput::placeholder,
+.formTextarea::placeholder {
+  color: #64748b;
+}
+
+.formInput:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 180px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.formGroup small {
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
   margin-top: 0.5rem;
 }
 
-.aiControls button {
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: none;
-  background: #f472b6;
-  color: #020617;
-  font-weight: 600;
+.submitBtn:hover:not(:disabled) {
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+  transform: translateY(-2px);
 }
 
-.aiTabs {
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.proTip {
+  display: flex;
+  gap: 1rem;
+  background: rgba(249, 115, 22, 0.1);
+  border-left: 3px solid #f97316;
+  padding: 1rem;
+  border-radius: 0.5rem;
   margin-top: 1rem;
 }
 
-.tabButtons {
+.proTip svg {
+  color: #f97316;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.proTip strong {
+  color: #f97316;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.proTip p {
+  color: #cbd5e1;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* ==================== LIGHT MODE ==================== */
+@media (prefers-color-scheme: light) {
+  .backBtn {
+    color: #3b82f6;
+  }
+
+  .backBtn:hover {
+    background: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+  }
+
+  .offlineBadge {
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.25);
+    color: #7f1d1d;
+  }
+
+  .offlineDot {
+    background: #ef4444;
+    box-shadow: 0 0 6px rgba(239, 68, 68, 0.4);
+  }
+
+  .sessionTitle {
+    color: #1e293b;
+  }
+
+
+
+  .statItem {
+    color: #475569;
+  }
+
+  .contentTabs {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+  }
+
+  .contentTabs > * {
+    background: #fafbfc;
+  }
+
+  .tabNav {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+  }
+
+  .tabBtn {
+    color: #64748b;
+  }
+
+  .tabBtn:hover {
+    color: #334155;
+    background: rgba(59, 130, 246, 0.05);
+  }
+
+  .tabBtn.active {
+    color: #3b82f6;
+    border-bottom-color: #3b82f6;
+  }
+
+  .tabContent {
+    background: #f8fafc;
+  }
+
+  .glossaryHeader h2,
+  .summaryHeader h2,
+  .memoryHeader h2 {
+    color: #1e293b;
+  }
+
+  .glossarySubtitle,
+  .summarySubtitle,
+  .memorySubtitle {
+    color: #475569;
+  }
+
+  .glossaryTerm {
+    background: rgba(59, 130, 246, 0.08);
+    border-left-color: #3b82f6;
+  }
+
+  .glossaryTerm:hover {
+    background: rgba(59, 130, 246, 0.15);
+  }
+
+  .termTitle {
+    color: #1e293b;
+  }
+
+  .termDef {
+    color: #334155;
+  }
+
+  .termUsage {
+    color: #475569;
+  }
+
+  .pointNumber {
+    background: #3b82f6;
+  }
+
+  .pointText {
+    color: #334155;
+  }
+
+  .summaryNote {
+    background: rgba(251, 146, 60, 0.1);
+    border-left-color: #f97316;
+  }
+
+  .summaryNote p {
+    color: #334155;
+  }
+
+  .memoryContent {
+    color: #334155;
+  }
+
+  .formCard {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+  }
+
+  .formHeader h2 {
+    color: #1e293b;
+  }
+
+  .formHeader p {
+    color: #475569;
+  }
+
+  .formGroup label {
+    color: #1e293b;
+  }
+
+  .formInput,
+  .formTextarea {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #1e293b;
+  }
+
+  .formInput::placeholder,
+  .formTextarea::placeholder {
+    color: #94a3b8;
+  }
+
+  .formInput:focus,
+  .formTextarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .formGroup small {
+    color: #64748b;
+  }
+
+  .editBtn {
+    background: #f1f5f9;
+    color: #1e293b;
+    border-color: #cbd5e1;
+  }
+
+  .editBtn:hover {
+    background: #e2e8f0;
+    border-color: #94a3b8;
+  }
+
+  .proTip {
+    background: rgba(251, 146, 60, 0.08);
+    border-left-color: #f97316;
+  }
+
+  .proTip p {
+    color: #334155;
+  }
+
+  .successBanner {
+    background: rgba(34, 197, 94, 0.1);
+    border-left-color: #16a34a;
+  }
+
+  .successBanner svg {
+    color: #16a34a;
+  }
+
+  .successBanner p {
+    color: #15803d;
+  }
+}
+
+/* ==================== RECENT SESSIONS ==================== */
+.recentSessions {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #334155;
+}
+
+.recentSessions h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin: 0 0 0.5rem 0;
+}
+
+.recentSessionsSubtitle {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  margin: 0 0 1rem 0;
+}
+
+.sessionsList {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.tabButtons button {
-  flex: 1;
-  padding: 0.4rem 0.5rem;
-  border: none;
-  border-radius: 8px;
-  background: #374151; /* dark gray */
-  color: #9ca3af; /* gray text */
+.sessionItem {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.sessionItem:hover {
+  background: #1e293b;
+  border-color: #60a5fa;
+}
+
+.sessionItemTitle {
+  color: #e2e8f0;
   font-weight: 500;
-}
-
-.tabButtons button.active {
-  background: #3b82f6; /* blue */
-  color: white;
-}
-
-.tabContent {
-  background: #1f2937; /* dark card background */
-  padding: 0.75rem;
-  border-radius: 10px;
   margin-bottom: 0.5rem;
-  max-height: 180px;
-  overflow-y: auto;
 }
+
+.sessionItemMeta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.badge {
+  background: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge.processing {
+  background: rgba(96, 165, 250, 0.2);
+  color: #93c5fd;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 640px) {
+  .sessionPage {
+    padding: 1rem;
+  }
+
+  .formCard {
+    padding: 1.5rem 1rem;
+    border-radius: 1rem;
+  }
+
+  .sessionTitle {
+    font-size: 1.5rem;
+  }
+
+  .sessionStats {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .tabBtn {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .tabContent {
+    padding: rem 1rem;
+  }
+
+  .sessionActions {
+    flex-direction: column;
+  }
+
+  .actionBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .summaryPoint {
+    gap: 0.75rem;
+  }
+
+  .formHeader h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* ==================== LIGHT MODE - RECENT SESSIONS ==================== */
+@media (prefers-color-scheme: light) {
+  .recentSessions {
+    border-top-color: #cbd5e1;
+  }
+
+  .recentSessions h3 {
+    color: #1e293b;
+  }
+
+  .sessionItem {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+  }
+
+  .sessionItem:hover {
+    background: #f8fafc;
+    border-color: #3b82f6;
+  }
+
+  .sessionItemTitle {
+    color: #1e293b;
+  }
+
+  .sessionItemMeta {
+    color: #64748b;
+  }
+
+  .badge {
+    background: rgba(34, 197, 94, 0.1);
+    color: #15803d;
+  }
+
+  .badge.processing {
+    background: rgba(59, 130, 246, 0.1);
+    color: #1e40af;
+  }
+}
+

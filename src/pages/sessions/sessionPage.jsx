@@ -1,219 +1,186 @@
-import { useState } from "react";
-import {
-  getCourses,
-  addSession,
-  deleteSession,
-  updateSession
-} from "../../services/storageService";
+import { useState, useEffect } from "react";
+import { addSession, updateSession, getCourses } from "../../services/storageService";
 import { processNotes } from "../../services/aiService";
-
 import "./sessionPage.css";
 
-function SessionPage({ courseId, onBack }) {
-  const [newTitle, setNewTitle] = useState("");
-  const [course, setCourse] = useState(
-    getCourses().find((c) => c.id === courseId) || null
-  );
+function SessionPage({ courseId, onBack, onNavigateToStudyBank }) {
+  // 1. Initial form state
+  const [newSessionTitle, setNewSessionTitle] = useState("");
+  const [newSessionNotes, setNewSessionNotes] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isOnline, setIsOnline] = useState(() => navigator.onLine);
+  const [courses] = useState(() => getCourses());
+  const [selectedCourseId, setSelectedCourseId] = useState(courseId);
 
-  // Track which session is being edited
-  const [editingSessionId, setEditingSessionId] = useState(null);
-  const [editingNotes, setEditingNotes] = useState("");
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
 
-  // AI processing state per session
-  const [aiOutputs, setAiOutputs] = useState({}); // { sessionId: outputJSON }
-  const [processingId, setProcessingId] = useState(null); // track which session is processing
-  const [activeTabs, setActiveTabs] = useState({}); // { sessionId: "glossary" }
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
-  // Start editing notes
-  function startEditing(session) {
-    setEditingSessionId(session.id);
-    setEditingNotes(session.rawNotes);
-  }
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
 
-  // Save notes
-  function saveNotes() {
-    if (!editingSessionId) return;
+  const handleAddSession = async (e) => {
+    e.preventDefault();
+    
+    const title = newSessionTitle.trim();
+    const notes = newSessionNotes.trim();
 
-    updateSession(courseId, editingSessionId, { rawNotes: editingNotes });
+    if (!title || !notes) return;
 
-    const updated = getCourses().find((c) => c.id === courseId);
-    setCourse(updated);
+    try {
+      // 2. Save raw session to storage immediately (Offline-first)
+      const session = addSession(selectedCourseId, title, {
+        rawNotes: notes,
+        aiStatus: isOnline ? "processing" : "pending"
+      });
 
-    setEditingSessionId(null);
-    setEditingNotes("");
-  }
+      // 3. Clear form and provide feedback
+      setNewSessionTitle("");
+      setNewSessionNotes("");
+      if (!isOnline) {
+        setSuccessMessage(`"${title}" saved offline. We'll process it when you're back online.`);
+        setIsProcessing(false);
+        setTimeout(() => setSuccessMessage(""), 5000);
+        return;
+      }
 
-  // Add a new session
-  function handleAddSession() {
-    if (!newTitle.trim()) return;
+      setIsProcessing(true);
+      setSuccessMessage(`"${title}" saved. AI is processing in the background.`);
 
-    addSession(courseId, newTitle.trim());
-    const updated = getCourses().find((c) => c.id === courseId);
-    setCourse(updated);
-    setNewTitle("");
-  }
+      // 4. Background AI Processing
+      // We don't "await" this for the UI to clear, so the user can add another note immediately
+      processNotes(notes)
+        .then((result) => {
+          if (result) {
+            updateSession(selectedCourseId, session.id, {
+              aiOutput: result,
+              aiStatus: "done"
+            });
+          } else {
+            updateSession(selectedCourseId, session.id, { aiStatus: "pending" });
+          }
+        })
+        .catch(() => {
+          updateSession(selectedCourseId, session.id, { aiStatus: "pending" });
+          setSuccessMessage(`"${title}" saved. AI will retry when you're back online.`);
+        })
+        .finally(() => setIsProcessing(false));
 
-  // Delete a session
-  function handleDeleteSession(sessionId) {
-    deleteSession(courseId, sessionId);
-    const updated = getCourses().find((c) => c.id === courseId);
-    setCourse(updated);
+      // Auto-hide success message
+      setTimeout(() => setSuccessMessage(""), 5000);
 
-    // Remove AI state for deleted session
-    setAiOutputs((prev) => {
-      const copy = { ...prev };
-      delete copy[sessionId];
-      return copy;
-    });
-    setActiveTabs((prev) => {
-      const copy = { ...prev };
-      delete copy[sessionId];
-      return copy;
-    });
-  }
-
-  if (!course) return null;
+    } catch (error) {
+      console.error("Save Error:", error);
+      setIsProcessing(false);
+    }
+  };
 
   return (
-    <section className="sessionsPage">
-      <button className="backBtn" onClick={onBack}>
-        ← Courses
-      </button>
+    <div className="sessionPage">
+      <header className="pageHeader">
+        <button className="backBtn" onClick={onBack}>
+          ← Dashboard
+        </button>
+      </header>
 
-      <h2>{course.title}</h2>
+      <main className="sessionMain">
+        <div className="formWrapper">
+          <div className="pageTitle">
+            <h1>Transform Your Notes</h1>
+            <p>Source your lecture notes below and let AI create structured study materials with glossaries, summaries, and memory links.</p>
+            {!isOnline && (
+              <div className="offlineBadge">
+                <span className="offlineDot"></span>
+                Offline mode
+              </div>
+            )}
+          </div>
 
-      {/* Add new session */}
-      <div className="sessionInput">
-        <input
-          type="text"
-          placeholder="New session title"
-          value={newTitle}
-          onChange={(e) => setNewTitle(e.target.value)}
-        />
-        <button onClick={handleAddSession}>Add</button>
-      </div>
+          {successMessage && (
+            <div className="successBanner">
+              <div className="bannerContent">
+                <span className="checkIcon">✓</span>
+                <p>{successMessage}</p>
+              </div>
+              <button className="bannerAction" onClick={onNavigateToStudyBank}>View in Study Bank</button>
+            </div>
+          )}
 
-      {course.sessions.length === 0 ? (
-        <p className="emptyText">No sessions yet.</p>
-      ) : (
-        <ul className="sessionList">
-          {course.sessions.map((session) => {
-            const output = aiOutputs[session.id];
-            const activeTab = activeTabs[session.id] || "glossary";
-            const isProcessing = processingId === session.id;
+          <form onSubmit={handleAddSession} className="noteForm">
+            <div className="formGroup">
+              <label htmlFor="course-select">Select Course <span className="required">*</span></label>
+              <p className="fieldHint">Choose the course for this session</p>
+              <select 
+                id="course-select"
+                className="formSelect"
+                value={selectedCourseId}
+                onChange={(e) => setSelectedCourseId(e.target.value)}
+                required
+              >
+                <option value="">Select a course...</option>
+                {courses.map((course) => (
+                  <option key={course.id} value={course.id}>
+                    {course.title}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-            return (
-              <li key={session.id} className="sessionItem">
-                {/* Tabs above content */}
-                {output && (
-                  <div className="aiTabs">
-                    <div className="tabButtons">
-                      <button
-                        className={activeTab === "glossary" ? "active" : ""}
-                        onClick={() =>
-                          setActiveTabs((prev) => ({
-                            ...prev,
-                            [session.id]: "glossary"
-                          }))
-                        }
-                      >
-                        Glossary
-                      </button>
-                      <button
-                        className={activeTab === "summary" ? "active" : ""}
-                        onClick={() =>
-                          setActiveTabs((prev) => ({
-                            ...prev,
-                            [session.id]: "summary"
-                          }))
-                        }
-                      >
-                        Summary
-                      </button>
-                      <button
-                        className={activeTab === "memoryLink" ? "active" : ""}
-                        onClick={() =>
-                          setActiveTabs((prev) => ({
-                            ...prev,
-                            [session.id]: "memoryLink"
-                          }))
-                        }
-                      >
-                        Memory Link
-                      </button>
-                    </div>
+            <div className="formGroup">
+              <label htmlFor="session-title">Session Title <span className="required">*</span></label>
+              <p className="fieldHint">Give this session a descriptive title</p>
+              <input
+                id="session-title"
+                type="text"
+                placeholder="e.g., Lecture 5: Data Structures and Algorithms"
+                value={newSessionTitle}
+                onChange={(e) => setNewSessionTitle(e.target.value)}
+                className="formInput"
+                required
+              />
+            </div>
 
-                    <div className="tabContent">
-                      {activeTab === "glossary" && (
-                        <ul>
-                          {output.glossary?.map((g, i) => (
-                            <li key={i}>
-                              <strong>{g.term}</strong>: {g.definition} (Usage: {g.usage})
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                      {activeTab === "summary" && (
-                        <ol>
-                          {output.summary?.map((s, i) => (
-                            <li key={i}>{s}</li>
-                          ))}
-                        </ol>
-                      )}
-                      {activeTab === "memoryLink" && <p>{output.memoryLink}</p>}
-                    </div>
-                  </div>
-                )}
+            <div className="formGroup">
+              <label htmlFor="session-notes">Lecture Notes <span className="required">*</span></label>
+              <p className="fieldHint">Paste or type your lecture notes here... Include key concepts, definitions, examples, and important points discussed in class.</p>
+              <textarea
+                id="session-notes"
+                placeholder="Paste or type your lecture notes here... Include key concepts, definitions, examples, and important points discussed in class."
+                value={newSessionNotes}
+                onChange={(e) => setNewSessionNotes(e.target.value)}
+                className="formTextarea"
+                rows="12"
+                required
+              />
+            </div>
 
-                {/* Session title & actions */}
-                <span>{session.title}</span>
-                <div className="sessionActions">
-                  <button onClick={() => startEditing(session)}>✎ Edit</button>
-                  <button
-                    className="deleteBtn"
-                    onClick={() => handleDeleteSession(session.id)}
-                  >
-                    ×
-                  </button>
-                </div>
+            <button 
+              type="submit" 
+              className={`submitBtn ${isProcessing ? 'loading' : ''}`}
+              disabled={!newSessionTitle.trim() || !newSessionNotes.trim()}
+            >
+     
+              {isProcessing ? "Processing..." : "Add note"}
+            </button>
+          </form>
 
-                {/* Notes Editor */}
-                {editingSessionId === session.id && (
-                  <div className="notesEditor">
-                    <textarea
-                      value={editingNotes}
-                      onChange={(e) => setEditingNotes(e.target.value)}
-                      placeholder="Enter lecture notes..."
-                    />
-                    <button onClick={saveNotes}>Save Notes</button>
-                  </div>
-                )}
-
-                {/* AI Processing Button */}
-                {editingSessionId === session.id && (
-                  <div className="aiControls">
-                    <button
-                      onClick={async () => {
-                        setProcessingId(session.id);
-                        const result = await processNotes(editingNotes);
-                        if (result) {
-                          updateSession(session.courseId, session.id, { aiOutput: result });
-                          setAiOutputs((prev) => ({ ...prev, [session.id]: result }));
-                        }
-                        setProcessingId(null);
-                      }}
-                      disabled={isProcessing}
-                    >
-                      {isProcessing ? "Processing..." : "Generate AI Output"}
-                    </button>
-                  </div>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-      )}
-    </section>
+          <section className="proTipSection">
+            <div className="proTipIcon">💡</div>
+            <div className="proTipContent">
+              <h3>Pro Tip</h3>
+              <p>Include key concepts, definitions, examples, and important points from your lectures. The more detailed your notes, the better your study materials will be.</p>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
   );
 }
 

@@ -25,12 +25,13 @@ export function getCourses() {
   return getData().courses;
 }
 
-export function addCourse(title) {
+export function addCourse(title, code = "") {
   const data = getData();
 
   const newCourse = {
     id: crypto.randomUUID(),
     title,
+    code: code.toUpperCase(), 
     createdAt: Date.now(),
     sessions: []
   };
@@ -47,9 +48,19 @@ export function deleteCourse(courseId) {
   saveData(data);
 }
 
+export function updateCourse(courseId, updates) {
+  const data = getData();
+  const course = data.courses.find(c => c.id === courseId);
+  if (!course) return null;
+
+  Object.assign(course, updates);
+  saveData(data);
+  return course;
+}
+
 /* Session operations */
 
-export function addSession(courseId, sessionTitle, rawNotes = "") {
+export function addSession(courseId, sessionTitle, options = {}) {
   const data = getData();
   const course = data.courses.find(c => c.id === courseId);
 
@@ -58,8 +69,9 @@ export function addSession(courseId, sessionTitle, rawNotes = "") {
   const newSession = {
     id: crypto.randomUUID(),
     title: sessionTitle,
-    rawNotes,
-    aiOutput: null,
+    rawNotes: options.rawNotes || "",
+    aiOutput: options.aiOutput || null,
+    aiStatus: options.aiStatus || null,
     createdAt: Date.now(),
     updatedAt: Date.now()
   };

@@ -1,0 +1,608 @@
+.dashboardPage {
+  padding: 1.5rem 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Header */
+.dashHeader {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.headerContent {
+  flex: 1;
+}
+
+.dashHeader h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: #f8fafc;
+}
+
+.dashSubtitle {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.settingsBtn {
+  background: none;
+  border: none;
+  color: #cbd5e1;
+  cursor: pointer;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.settingsBtn:hover {
+  background: rgba(96, 165, 250, 0.1);
+  color: #60a5fa;
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background: linear-gradient(135deg, #495064 0%, #2e3a60 100%);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.statIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.bookIcon {
+  background: rgba(96, 165, 250, 0.2);
+  color: #60a5fa;
+}
+
+.clockIcon {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+}
+
+.statContent {
+  flex: 1;
+}
+
+.statNumber {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Courses Section */
+.coursesSection {
+  margin-bottom: 2.5rem;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+
+.sectionHeader h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+}
+
+.sectionSubtitle {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.viewAllBtn {
+  background: transparent;
+  color: #60a5fa;
+  border: none;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Courses Grid */
+.coursesGrid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.courseCard {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  transition: all 0.2s ease;
+}
+
+.courseCard:hover {
+  border-color: #3b82f6;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.courseHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.courseCode {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #60a5fa;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.iconBtn {
+  background: transparent;
+  border: none;
+  padding: 0.375rem;
+  color: #60a5fa;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+}
+
+.iconBtn:hover {
+  background: rgba(59, 130, 246, 0.1);
+  color: #93c5fd;
+}
+
+.courseTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #f8fafc;
+  margin: 0 0 1rem 0;
+  line-height: 1.4;
+}
+
+/* Course Stats */
+.courseStats {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.courseStat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #94a3b8;
+}
+
+.courseStat svg {
+  flex-shrink: 0;
+}
+
+.courseStat strong {
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.courseActivity {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+
+.courseActivity svg {
+  width: 12px;
+  height: 12px;
+  opacity: 0.6;
+}
+
+/* Next Class */
+.nextClass {
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.nextClassIcon {
+  font-size: 1.25rem;
+}
+
+.nextClassInfo {
+  flex: 1;
+}
+
+.nextClassLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fbbf24;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.nextClassDetails {
+  font-size: 0.875rem;
+  color: #e2e8f0;
+  margin-top: 0.125rem;
+}
+
+/* Course Actions */
+.courseActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.btnPrimary {
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  padding: 0.875rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnPrimary:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.btnSecondary {
+  background: transparent;
+  color: #e2e8f0;
+  border: 1px solid #475569;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.btnSecondary:hover {
+  background: rgba(71, 85, 105, 0.2);
+  border-color: #64748b;
+}
+
+.btnLink {
+  background: transparent;
+  color: #60a5fa;
+  border: none;
+  padding: 0.625rem 0.5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.btnLink:hover {
+  color: #93c5fd;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 0.375rem;
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: #1e293b;
+  border: 2px dashed #334155;
+  border-radius: 1rem;
+}
+
+.emptyState button {
+  margin-top: 1rem;
+}
+
+/* Quick Actions */
+.quickActions {
+  margin-bottom: 2rem;
+}
+
+.quickActions h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+}
+
+.actionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.actionItem {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.actionItem:hover {
+  border-color: #3b82f6;
+  background: rgba(30, 41, 59, 0.8);
+  transform: translateX(4px);
+}
+
+.actionIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 0.625rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.5rem;
+}
+
+.addIcon {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+  font-weight: 300;
+}
+
+.bankIcon {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+}
+
+.cardsIcon {
+  background: rgba(168, 85, 247, 0.2);
+  color: #a855f7;
+}
+
+.actionContent {
+  flex: 1;
+}
+
+.actionTitle {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #f8fafc;
+  margin-bottom: 0.125rem;
+}
+
+.actionSubtitle {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.actionArrow {
+  color: #64748b;
+  font-size: 1.25rem;
+  transition: transform 0.2s ease;
+}
+
+.actionItem:hover .actionArrow {
+  transform: translateX(4px);
+}
+
+/* ====================================
+   LIGHT MODE STYLES
+   ==================================== */
+
+@media (prefers-color-scheme: light) {
+  .dashboardPage {
+    background-color: #f8fafc;
+  }
+
+  .dashHeader h1 {
+    color: #0f172a;
+  }
+
+  .dashSubtitle {
+    color: #64748b;
+  }
+
+  .settingsBtn {
+    color: #64748b;
+  }
+
+  .settingsBtn:hover {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+  }
+
+  .statCard {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  }
+
+  .courseCard {
+    background: #fff;
+    border-color: #e2e8f0;
+  }
+
+  .courseCard:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 8px 16px rgba(59, 130, 246, 0.15);
+  }
+
+  .courseTitle {
+    color: #0f172a;
+  }
+
+  .courseStat {
+    color: #64748b;
+  }
+
+  .courseStat strong {
+    color: #1e293b;
+  }
+
+  .courseActivity {
+    color: #94a3b8;
+  }
+
+  .nextClass {
+    background: rgba(251, 191, 36, 0.15);
+    border-color: rgba(251, 191, 36, 0.3);
+  }
+
+  .nextClassDetails {
+    color: #1e293b;
+  }
+
+  .btnSecondary {
+    color: #1e293b;
+    border-color: #cbd5e1;
+  }
+
+  .btnSecondary:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+  }
+
+  .emptyState {
+    background: #fff;
+    border-color: #cbd5e1;
+  }
+
+  .actionItem {
+    background: #fff;
+    border-color: #e2e8f0;
+  }
+
+  .actionItem:hover {
+    background: #f8fafc;
+  }
+
+  .actionTitle {
+    color: #0f172a;
+  }
+
+  .sectionSubtitle {
+    color: #64748b;
+  }
+
+  .viewAllBtn {
+    color: #3b82f6;
+  }
+}
+
+/* ====================================
+   RESPONSIVE - TABLET & DESKTOP
+   ==================================== */
+
+@media (min-width: 640px) {
+  .dashboardPage {
+    padding: 2rem 1.5rem;
+  }
+
+  .dashHeader h1 {
+    font-size: 2rem;
+  }
+
+  .statsGrid {
+    gap: 1.25rem;
+  }
+
+  .statCard {
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .coursesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .actionsList {
+    flex-direction: row;
+  }
+
+  .actionItem {
+    flex: 1;
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+  }
+
+  .actionItem:hover {
+    transform: translateY(-4px);
+  }
+
+  .actionArrow {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboardPage {
+    padding: 3rem 2rem;
+  }
+
+  .coursesGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .courseActions {
+    gap: 0.625rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .statsGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

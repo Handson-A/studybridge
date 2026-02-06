@@ -1,6 +1,28 @@
+import { useState } from "react";
 import "./onboardingPage.css";
 
 function OnboardingPage({ onGetStarted }) {
+  const [userName, setUserName] = useState("");
+  const [showError, setShowError] = useState(false);
+
+  const handleGetStarted = () => {
+    const trimmedName = userName.trim();
+    if (!trimmedName) {
+      setShowError(true);
+      return;
+    }
+
+    onGetStarted(trimmedName);
+  };
+
+  const handleNameChange = (event) => {
+    const value = event.target.value;
+    setUserName(value);
+    if (showError && value.trim()) {
+      setShowError(false);
+    }
+  };
+
   return (
     <div className="onboardingPage">
       <div className="onboardingContainer">
@@ -54,8 +76,28 @@ function OnboardingPage({ onGetStarted }) {
 
         {/* CTA Section */}
         <div className="ctaSection">
-          <p className="ctaText">Let's get you started by adding your first course</p>
-          <button className="ctaButton" onClick={onGetStarted}>
+          <p className="ctaText">Tell us your name to personalize your dashboard</p>
+          <div className="nameField">
+            {/* <label className="nameLabel" htmlFor="onboardingName">
+              Your name
+            </label> */}
+            <input
+              id="onboardingName"
+              className="nameInput"
+              type="text"
+              placeholder="e.g., User"
+              value={userName}
+              onChange={handleNameChange}
+              aria-invalid={showError}
+              aria-describedby={showError ? "nameError" : undefined}
+            />
+            {showError && (
+              <span id="nameError" className="nameError" role="alert">
+                Please enter your name to continue.
+              </span>
+            )}
+          </div>
+          <button className="ctaButton" onClick={handleGetStarted} disabled={!userName.trim()}>
             Get Started → 
           </button>
           <p className="skipText">

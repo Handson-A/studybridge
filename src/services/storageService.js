@@ -4,7 +4,8 @@ function initializeStorage() {
   const existing = localStorage.getItem(STORAGE_KEY);
   if (!existing) {
     const initialData = {
-      courses: []
+      courses: [],
+      userName: ""
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(initialData));
   }
@@ -12,7 +13,12 @@ function initializeStorage() {
 
 function getData() {
   initializeStorage();
-  return JSON.parse(localStorage.getItem(STORAGE_KEY));
+  const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  if (typeof data.userName !== "string") {
+    data.userName = "";
+    saveData(data);
+  }
+  return data;
 }
 
 function saveData(data) {
@@ -23,6 +29,16 @@ function saveData(data) {
 
 export function getCourses() {
   return getData().courses;
+}
+
+export function getUserName() {
+  return getData().userName || "";
+}
+
+export function setUserName(name) {
+  const data = getData();
+  data.userName = name;
+  saveData(data);
 }
 
 export function addCourse(title, code = "") {

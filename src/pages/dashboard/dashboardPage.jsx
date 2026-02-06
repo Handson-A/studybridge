@@ -1,10 +1,10 @@
 import { useState, useMemo, useEffect } from "react";
-import { getCourses } from "../../services/storageService";
+import { getCourses, getUserName } from "../../services/storageService";
 import "./dashboardPage.css";
 
 function DashboardPage({ onNavigateToSessions, onNavigateToStudyBank, onNavigateToSettings }) {
   const [courses] = useState(() => getCourses());
-  const [userName] = useState("Ayel-son");
+  const [userName] = useState(() => getUserName() || "User");
   
   // Stable reference for time to satisfy React's purity rules
   const [renderTime, setRenderTime] = useState(() => Date.now());
@@ -25,11 +25,19 @@ function DashboardPage({ onNavigateToSessions, onNavigateToStudyBank, onNavigate
     return courses.reduce((sum, c) => sum + (c.sessions?.length || 0), 0);
   }, [courses]);
 
-  // Calculate global last activity info
+  // Calculate global last activity info (course added, session added, or session updated)
   const lastActivityInfo = useMemo(() => {
     let mostRecent = 0;
+    
     courses.forEach(course => {
+      // Check when course was added
+      if (course.createdAt > mostRecent) mostRecent = course.createdAt;
+      
+      // Check all sessions for this course
       course.sessions?.forEach(session => {
+        // Check when session was added
+        if (session.createdAt > mostRecent) mostRecent = session.createdAt;
+        // Check when session was last updated
         if (session.updatedAt > mostRecent) mostRecent = session.updatedAt;
       });
     });

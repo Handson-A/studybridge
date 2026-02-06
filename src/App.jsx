@@ -5,15 +5,18 @@ import CoursesPage from "./pages/courses/coursePage";
 import SessionPage from "./pages/sessions/sessionPage";
 import SettingsPage from "./pages/settings/settingsPage";
 import StudyBankPage from "./pages/studybank/studybankPage";
-import { getCourses, updateSession } from "./services/storageService";
+import { getCourses, getUserName, setUserName, updateSession } from "./services/storageService";
 import { processNotes } from "./services/aiService";
 
 function App() {
   // Check if this is first time (no courses)
   const hasNoCourses = getCourses().length === 0;
+  const hasNoUserName = !getUserName().trim();
   
   // Navigation state - start with onboarding if no courses
-  const [currentPage, setCurrentPage] = useState(hasNoCourses ? "onboarding" : "dashboard");
+  const [currentPage, setCurrentPage] = useState(
+    hasNoCourses || hasNoUserName ? "onboarding" : "dashboard"
+  );
   const [activeCourseId, setActiveCourseId] = useState(null);
 
   useEffect(() => {
@@ -85,7 +88,10 @@ function App() {
       case "onboarding":
         return (
           <OnboardingPage
-            onGetStarted={goToSettings}
+            onGetStarted={(name) => {
+              setUserName(name.trim());
+              goToSettings();
+            }}
           />
         );
       case "dashboard":

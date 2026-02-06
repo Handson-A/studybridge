@@ -29,6 +29,11 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.status(200).send('StudyBridge API is Online');
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ 
@@ -57,7 +62,7 @@ app.use((err, req, res) => {
 
 // Start server
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`StudyBridge API server running on http://localhost:${PORT}`);
+  console.log(`StudyBridge API server running on port ${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`Gemini API Key: ${process.env.GEMINI_API_KEY ? '✓ Configured' : '✗ Missing'}`);
   console.log(`CORS enabled for: ${process.env.FRONTEND_URL || 'http://localhost:5173'}`);
